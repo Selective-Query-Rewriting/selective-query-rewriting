@@ -1,3 +1,24 @@
+# ── Project-specific ignores ─────────────────────────────────────────────────
+# Local datasets, processed data, and retrieval indexes
+/data/
+
+# Generated experiment outputs and caches
+outputs/
+.rewrite_cache/
+*.jsonl.cache
+
+# Secrets and environment files
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -218,3 +239,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS
+.DS_Store
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local datasets, processed data, and retrieval indexes
+*.sqlite
+*.sqlite3
+*.db

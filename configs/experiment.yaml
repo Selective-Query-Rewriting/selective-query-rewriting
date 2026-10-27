@@ -1,0 +1,71 @@
+# ── Experiment Configuration ──────────────────────────────────────────────────
+# Edit this file to change experimental settings.
+# Do NOT modify source code just to change a hyperparameter.
+#
+# Lines marked [UNRESOLVED] require team agreement before use.
+# ─────────────────────────────────────────────────────────────────────────────
+
+run_name: "pilot_run_001"  # Change for each distinct experiment
+
+# ── Dataset ───────────────────────────────────────────────────────────────────
+dataset:
+  name: "qrecc"                          # Verified: Zenodo record 4769775
+  raw_dir: "data/raw/qrecc"             # path to downloaded raw files
+  processed_dir: "data/processed/qrecc" # output of preprocessing
+
+  # Verified filenames from Zenodo
+  train_file: "qrecc-training.json"      # ~63K turns, ~9K conversations
+  test_file: "qrecc-test.json"           # ~18K turns, ~5K conversations
+
+  # Passage corpus — 54M passages, ~27.5 GB compressed
+  # Do NOT download until ready for full evaluation
+  corpus_dir: "data/raw/qrecc/passages"  # after unzipping passages.zip
+
+  # Pilot mode: limit conversations for quick iteration
+  pilot_mode: true
+  pilot_max_convs: 50                    # conversations per split
+
+  # History extraction from QReCC's interleaved Context field
+  extract_questions_only: true           # use only Q strings, not Q+A
+
+# ── Query Formulations ────────────────────────────────────────────────────────
+formulations:
+  run_keep: true
+  run_concat: true
+  run_rewrite: false    # requires LLM; set false until API key is configured
+  concat_max_history_turns: 3  # [UNRESOLVED] decide with team
+
+# ── Retrieval (BM25) ──────────────────────────────────────────────────────────
+retrieval:
+  method: "bm25"
+  index_dir: "data/index/bm25_qrecc"
+  top_k: 100            # retrieve top-100 for Recall@100; re-rank for @10
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+evaluation:
+  metrics:              # [UNRESOLVED] finalize before held-out test evaluation
+    - "mrr@10"
+    - "recall@10"
+    - "recall@100"
+    - "ndcg@10"
+  primary_metric: "ndcg@10"   # [UNRESOLVED] must agree before oracle/gate work
+  tie_margin: 0.01            # [UNRESOLVED] delta within which KEEP≈REWRITE
+
+# ── Rewriting (LLM) ───────────────────────────────────────────────────────────
+rewriting:
+  provider: "openai"                   # [UNRESOLVED] or another provider
+  model: "gpt-4o-mini"                 # [UNRESOLVED] finalize model choice
+  # API key read from environment: OPENAI_API_KEY
+  cache_file: ".rewrite_cache/rewrites.jsonl"
+  max_tokens: 64
+  temperature: 0.0                     # deterministic for reproducibility
+
+# ── Gating ────────────────────────────────────────────────────────────────────
+gating:
+  target_rewrite_rate: null            # [UNRESOLVED] set after KEEP/REWRITE analysis
+  random_seed: 42
+
+# ── Output ────────────────────────────────────────────────────────────────────
+output:
+  results_dir: "outputs/results"
+  plots_dir: "outputs/plots"

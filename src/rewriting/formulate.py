@@ -78,3 +78,36 @@ def formulate(
         f"Unknown formulation method: {method!r}. "
         "Choose 'keep', 'concat', or 'rewrite'."
     )
+
+
+def formulate_with_cache(
+    turn: ConversationTurn,
+    method: str,
+    rewrite_cache=None,
+    max_history_turns: int = 3,
+) -> str:
+    """Formulate a query, generating a rewrite through the cache if needed."""
+
+    if method != "rewrite":
+        return formulate(
+            turn,
+            method=method,
+            max_history_turns=max_history_turns,
+        )
+
+    if rewrite_cache is None:
+        raise ValueError(
+            "rewrite_cache is required when method='rewrite'."
+        )
+
+    cached_rewrite = rewrite_cache.get_rewrite(
+        turn.unique_id,
+        turn.question,
+        turn.conversation_history,
+    )
+
+    return formulate(
+        turn,
+        method="rewrite",
+        cached_rewrite=cached_rewrite,
+    )

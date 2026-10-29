@@ -270,7 +270,7 @@ outputs/
 | 1 | Dataset loading, schema, and coverage analysis | ✅ Complete |
 | 2 | BM25 retrieval foundation and index construction | ✅ Complete |
 | 3 | Query formulation baselines and pilot generation | ✅ Complete (pilot done) |
-| 4 | Per-query retrieval evaluation, outcome labels, oracle | 🔲 Not started |
+| 4 | Per-query retrieval evaluation, outcome labels, oracle | 🔄 Pipeline implemented & verified (data artifact transfer/generation pending) |
 | 5 | Pre-retrieval features, gating models, controls | 🔲 Not started |
 | 6 | Efficiency measurement and error analysis | 🔲 Not started |
 | 7 | Frozen test protocol, final results, paper reporting | 🔲 Not started |
@@ -800,6 +800,7 @@ python scripts/run_formulation_pilot.py
 
 | Date | Milestone |
 |---|---|
+| 2026-10-29 | **Phase 4 implementation & test verification complete**: implemented `scripts/verify_id_compatibility.py`, `scripts/run_retrieval_eval.py`, `tests/test_retrieval_eval.py`, and `tests/run_all_tests.py`. Cleaned `requirements.txt`. All 101 tests pass with 0 failures. Noted that gitignored `data/` and `outputs/` from previous Mac environment must be placed on local machine for live evaluation run. |
 | 2026-10-29 | **Stage A audit complete**: full codebase inspection, all three attached documents read, `PROJECT_PROGRESS.md` created from scratch |
 | (prior) | Phase 3 pilot complete: 136 turns, 134/136 rewrites, 108 tests passing |
 | (prior) | Phase 2 complete: BM25 index built (2,981,202 passages) |

@@ -66,6 +66,9 @@ test_files = [
     "tests.test_formulate",
     "tests.test_load_qrecc",
     "tests.test_retrieval_eval",
+    "tests.test_gating",
+    "tests.test_efficiency_and_errors",
+    "tests.test_pipeline_reproducibility",
 ]
 
 total_passed = 0

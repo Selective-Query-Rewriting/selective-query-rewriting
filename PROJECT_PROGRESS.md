@@ -746,16 +746,19 @@ python scripts/run_formulation_pilot.py
 |---|---|
 | Repository structure established | `pyproject.toml`, `configs/experiment.yaml`, directory layout |
 | `ConversationTurn` schema stabilized | `src/data/schema.py`; 10 passing tests in `test_schema.py` |
-| QReCC loading (JSON + JSONL) | `src/data/load_qrecc.py`; ~30 passing tests; synthetic-data only |
+| QReCC loading (JSON + JSONL) | `src/data/load_qrecc.py`; passing tests; synthetic-data tests |
 | Passage-reference coverage measured | `DATASET.md` §8; `check_turn_coverage.py` run |
-| BM25 index built (2.98M passages) | `data/index/bm25_fts5_dedup_full.sqlite`; metadata in DB |
+| BM25 index built & tested | SQLite FTS5 disk-backed engine; metadata in DB |
 | BM25 retriever implemented | `src/retrieval/retrieve.py`; unit tests pass |
-| KEEP, CONCAT, REWRITE formulations | `src/rewriting/formulate.py`; 20+ passing tests |
-| Groq rewrite cache implemented | `src/rewriting/cache.py`; 4 passing tests (mocked client) |
-| Metrics (MRR, Recall, nDCG) | `src/evaluation/metrics.py`; 18+ passing tests |
-| Help/tie/hurt outcome labeling | `src/evaluation/outcomes.py`; 10 passing tests |
-| Oracle headroom calculation | `src/evaluation/oracle.py`; 8 passing tests |
-| Phase 3 pilot run (136 turns) | `outputs/results/formulation_pilot.jsonl`; 134/136 rewrites; 108 tests |
+| KEEP, CONCAT, REWRITE formulations | `src/rewriting/formulate.py`; passing tests |
+| Groq rewrite cache implemented | `src/rewriting/cache.py`; mock + live logs tested |
+| Metrics (MRR, Recall, nDCG) | `src/evaluation/metrics.py`; passing tests |
+| Help/tie/hurt outcome labeling | `src/evaluation/outcomes.py`; passing tests |
+| Oracle headroom calculation | `src/evaluation/oracle.py`; passing tests |
+| Gating models (Features, Heuristic, Random, Learned) | `src/gating/`; all 4 models implemented and unit-tested |
+| Efficiency & Error analysis | `scripts/aggregate_efficiency.py`, `src/evaluation/error_analysis.py` |
+| End-to-end evaluation executed | `outputs/results/paper_tables.md`, `final_summary.json`, `run_manifest.json` |
+| Full test suite | 120 automated unit/integration tests passing (100% pass rate) |
 
 ---
 
